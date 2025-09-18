@@ -1,0 +1,44 @@
+name: Add issues to Ignite project
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      repository-projects: write
+    steps:
+      - name: Add issue to project
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/microsoft/projects/929
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  label_issues:
+    name: Label issues
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Label issue based on type
+        uses: github/issue-labeler@v3.4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yml
+          enable-versioned-regex: 0
+          include-title: 1
+
+      - name: Add default labels for Ignite session
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            ignite-2025
+            lab-517

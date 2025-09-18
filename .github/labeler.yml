@@ -1,0 +1,61 @@
+# Label configuration for automatic issue labeling
+# This file defines patterns to automatically apply labels to issues
+
+# Documentation related issues
+documentation:
+  - '/docs/**'
+  - '**/*.md'
+  - 'documentation'
+  - 'readme'
+
+# Bug reports
+bug:
+  - 'bug'
+  - 'error'
+  - 'issue'
+  - 'problem'
+  - 'broken'
+  - 'not working'
+
+# Feature requests
+enhancement:
+  - 'feature'
+  - 'enhancement'
+  - 'improvement'
+  - 'add'
+  - 'request'
+
+# Questions and help
+question:
+  - 'question'
+  - 'help'
+  - 'how to'
+  - 'support'
+
+# Lab related
+lab:
+  - '/lab/**'
+  - 'lab'
+  - 'exercise'
+  - 'workshop'
+
+# Source code related
+code:
+  - '/src/**'
+  - '**/*.py'
+  - '**/*.js'
+  - '**/*.ts'
+  - '**/*.json'
+
+# AKS and Kubernetes related
+aks:
+  - 'aks'
+  - 'kubernetes'
+  - 'k8s'
+  - 'azure kubernetes'
+
+# MCP related
+mcp:
+  - 'mcp'
+  - 'model context protocol'
+  - 'context protocol'
