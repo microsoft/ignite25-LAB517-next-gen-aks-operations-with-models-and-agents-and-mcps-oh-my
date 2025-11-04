@@ -1,0 +1,17 @@
+version: v0.1
+testId: sample-app-load-test
+displayName: Sample App Load Test
+description: Load test for sample application to demonstrate KEDA autoscaling
+engineInstances: 2
+testType: Locust
+testPlan: locustfile.py
+configurationFiles:
+  - requirements.txt
+environmentVariables:
+  LOCUST_USERS: 2000
+  LOCUST_SPAWN_RATE: 500
+  LOCUST_RUN_TIME: 300
+  LOCUST_HOST: https://azure.microsoft.com
+  ENABLE_LOGGING: True
+splitAllCSVs: false
+failureCriteria: []

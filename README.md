@@ -1,97 +1,76 @@
-# Welcome Ignite 2025 Creators!
-
-Thanks for creating content for Ignite!  Please follow this guidance so all ignite repos have the same look and feel.
-
-## How to contact Skillable?
-
-If you have issues with the Skillable environment, please follow these steps:
-
-1. Open an issue in the [Issues](../../issues) tab using the `New issue` button.
-1. Describe the problem, be descriptive, use screenshots if possible etc.
-1. Tag the following Skillable employees:
-   - @kylerosenthal
-   - @TubaMikeBob
-   - @Naimjones16
-   - @jmbauf
-1. Have all the discussions related to the issue in the issue itself.
-1. Once the issue is resolved, please mark it as Closed.
-
-## Put your docs in the docs folder
-
-This repo is configured for a user to view the docs through mkdocs.
-
-1. update the `mkdocs.yml` file to reference your session. Look particularly for the `site_name`, `site_author`, and `repo_name` tags.
-1. Subfolders in the docs folder will show up as tabs in the navigation bar.
-
-## Guidance
-
-1. Do not turn on github pages for this repo, traffic to github pages isn't captured in our metrics.
-1. Do not store slides or recordings in this repo
-
-## Update the badges!
-
-1. if the foundry discord and github links aren't appropriate for your session you can remove or change them.
-2. See shields.io for how to build your own dynamic or static badge for your community destinations, or other sample repos for how they've done
-3. Please limit your repo to one row of badges under the session title.
-
-## MCP Server
-1. This repo has an mcp.json file and is configured to let agents connect to the Learn MCP Server.
-
-> **Important** Make sure to avoid hardcoding sensitive information like API keys and other credentials by using input variables or environment files.
-
-
-## Update this readme below
-
-1. Fill out the content in this file, below the banner graphic, including the session code.
-2. Please embed links to Learn with your campaign codes!
-3. Add resources for your session to the Resources and Next Steps table
-4. Change the Content Owner section to your info
-5. Change the placeholder session code BRKXXX to your session code.
-
-## Improve SEO
-
-1. Update the Repo Info for this repo 
-    1. Click the gear icon⚙️ in the upper right.
-    1. Set a good description of this repo.
-    1. Add the technologies that you're using in this session.
-
-## Questions?
-
-Send them to [Mike Kinsman](mailto:mikki@microsoft.com) and [Laurent Bugnion](lbugnion@microsoft.com), or surface your question through your content leads.  We are also monitoring issues logged in the repos.
-
-## Finished?
-
-- Remove the folders that you don't need or didn't use, *please don't leave them empty with placeholder readmes*
-- Delete this line and everything above it!
-
 <p align="center">
 <img src="img/Banner-ignite-25.png" alt="decorative banner" width="1200"/>
 </p>
 
 # [Microsoft Ignite 2025](https://ignite.microsoft.com)
 
-## 🔥BRKXXX: Next-Gen AKS Operations with Models, and Agents, and MCPs
+## 🔥LAB517: Next-Gen AKS Operations with Models, and Agents, and MCPs
 
 [![Microsoft Azure AI Foundry Discord](https://dcbadge.limes.pink/api/server/ByRwuEEgH4)](https://discord.com/invite/ByRwuEEgH4)
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=adff2f&logoColor=fff)](https://aka.ms/foundry/forum)
 
+### Who Should Take This Lab?
+
+This lab is designed for:
+
+- **Platform Engineers** managing Kubernetes clusters in production
+- **DevOps Engineers** interested in AI-assisted operations
+- **Site Reliability Engineers (SREs)** exploring automation opportunities
+- **Cloud Architects** evaluating next-generation operational tools
+
+**Prerequisites:** Basic familiarity with Kubernetes concepts and Azure is helpful but not required. The lab provides context and links to foundational resources.
+
 ### Session Description
 
-*Add Session Description*
+Build confidence in managing AKS at scale with next‑gen ops tools. In this hands‑on lab, you’ll simulate a production service hit by traffic spikes, discover how AI‑driven alerts surface hidden bottlenecks, and deploy agents that self‑heal nodes. Using open‑source tools and the aks‑mcp server, you can automate cluster scaling, patch management, and real‑time troubleshooting—letting the AI orchestrate Kubernetes and Azure resources with natural‑language commands and pre‑built MCP integrations. 
 
 ### 🧠 Learning Outcomes
 
 By the end of this session, learners will be able to:
 
--  
--
--
+- **Deploy and configure** AI agent frameworks (AKS MCP Server, CLI Agent, kagent) with Azure AI Foundry models
+- **Build multi-agent systems** where specialized agents collaborate on complex operational tasks
+- **Troubleshoot production scenarios** using natural language instead of memorizing CLI syntax
+- **Orchestrate automated remediation** for node failures, traffic spikes, and configuration drift
+- **Generate proactive health assessments** combining Azure Advisor recommendations with Kubernetes best practices
+- **Understand the Model Context Protocol (MCP)** and how it standardizes AI-tool integration
 
 ### 💻 Technologies Used
 
-1.
-1.
-1.
+1. **[Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/)** - Managed Kubernetes service in Azure
+1. **[Azure AI Foundry](https://learn.microsoft.com/azure/ai-foundry/)** - Platform for building AI applications with enterprise-grade models
+1. **[Model Context Protocol (MCP)](https://modelcontextprotocol.io/)** - Open standard for connecting AI agents to external tools
+1. **[AKS MCP Server](https://github.com/Azure/aks-mcp)** - MCP server that exposes AKS and Kubernetes capabilities to AI agents
+1. **[CLI Agent for AKS](https://github.com/Azure/cli-agent-for-aks)** - Terminal-based AI assistant for cluster management
+1. **[kagent](https://kagent.dev/)** - Kubernetes-native AI agents (CNCF Sandbox project)
+
+### 📚 Foundational Resources
+
+New to these technologies? Start here:
+
+- **[Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/)** - Introduction to Kubernetes concepts
+- **[What is Azure Kubernetes Service?](https://learn.microsoft.com/azure/aks/intro-kubernetes)** - AKS overview and key features
+- **[Introduction to Azure AI Foundry](https://learn.microsoft.com/azure/ai-foundry/what-is-azure-ai-foundry)** - Learn about enterprise AI capabilities
+- **[Model Context Protocol Docs](https://modelcontextprotocol.io/docs/getting-started/intro)** - Understanding MCP architecture
+- **[MCP for Beginners](https://github.com/microsoft/mcp-for-beginners)** - Step-by-step guide to building with MCP
+
+### 🚀 Getting Started
+
+This lab follows a two-step process:
+
+1. **[Deploy Infrastructure](lab/README.md)** - Set up your AKS cluster, Azure AI Foundry, and monitoring tools (20-25 minutes)
+2. **[Start Lab Activities](lab/guide/README.md)** - Work through hands-on scenarios with AI agents
+
+#### Step 1: Deploy Lab Infrastructure
+
+Head over to the **[Lab Setup Guide](lab/README.md)** for step-by-step instructions on deploying:
+
+- Azure Kubernetes Service cluster with advanced features
+- Azure AI Foundry with GPT models
+- Azure Monitor and Log Analytics workspaces
+- All necessary infrastructure for the hands-on lab
+
+The guide includes prerequisites, deployment commands, troubleshooting tips, and cleanup instructions.
 
 ### 🌟 Microsoft Learn MCP Server
 
@@ -107,32 +86,22 @@ For more information, setup instructions for other dev clients, and to post comm
 
 | Resources          | Links                             | Description        |
 |:-------------------|:----------------------------------|:-------------------|
-| Ignite 2025 Next Steps | [https://aka.ms/Ignite25-Next-Steps](https://aka.ms/Ignite25-Next-Steps?ocid=ignite25_nextsteps_cnl) | Links to all repos for AI Tour 26 Sessions |
 | Azure AI Foundry Community Discord | [![Microsoft Azure AI Foundry Discord](https://dcbadge.limes.pink/api/server/ByRwuEEgH4)](https://discord.com/invite/ByRwuEEgH4)| Connect with the Azure AI Foundry Community! |
 | Learn at Ignite | [https://aka.ms/LearnAtIgnite](https://aka.ms/LearnAtIgnite?ocid=ignite25_nextsteps_github_cnl) | Continue learning on Microsoft Learn |
 
 ## Content Owners
 
-<!-- TODO: Add yourself as a content owner
-1. Change the src in the image tag to {your github url}.png
-2. Change INSERT NAME HERE to your name
-3. Change the github url in the final href to your url. -->
-
 <table>
 <tr>
-    <td align="center"><a href="http://github.com/mikekinsman">
-        <img src="https://github.com/mikekinsman.png" width="100px;" alt="INSERT NAME HERE"
-"/><br />
-        <sub><b> INSERT NAME HERE
-</b></sub></a><br />
-            <a href="https://github.com/mikekinsman" title="talk">📢</a> 
+    <td align="center"><a href="http://github.com/pauldotyu">
+        <img src="https://github.com/pauldotyu.png" width="100px;" alt="Paul Yu"/><br />
+        <sub><b>Paul Yu</b></sub></a><br />
+            <a href="https://github.com/pauldotyu" title="talk">📢</a> 
     </td>
-    <td align="center"><a href="http://github.com/mikekinsman">
-        <img src="https://github.com/mikekinsman.png" width="100px;" alt="INSERT NAME HERE
-"/><br />
-        <sub><b>INSERT NAME HERE
-</b></sub></a><br />
-            <a href="https://github.com/mikekinsman" title="talk">📢</a> 
+    <td align="center"><a href="http://github.com/pavneeta">
+        <img src="https://github.com/pavneeta.png" width="100px;" alt="Pavneet Ahluwalia"/><br />
+        <sub><b>Pavneet Ahluwalia</b></sub></a><br />
+            <a href="https://github.com/pavneeta" title="talk">📢</a> 
     </td>
 </tr></table>
 

@@ -1,0 +1,151 @@
+---
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: default1
+spec:
+  disruption:
+    budgets:
+    - nodes: 30%
+    consolidateAfter: 0s
+    consolidationPolicy: WhenEmptyOrUnderutilized
+  template:
+    metadata:
+      labels:
+        kubernetes.azure.com/ebpf-dataplane: cilium
+    spec:
+      expireAfter: Never
+      nodeClassRef:
+        group: karpenter.azure.com
+        kind: AKSNodeClass
+        name: default
+      requirements:
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+        - amd64
+      - key: kubernetes.io/os
+        operator: In
+        values:
+        - linux
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+        - on-demand
+      - key: karpenter.azure.com/sku-family
+        operator: In
+        values:
+        - D
+      startupTaints:
+      - effect: NoExecute
+        key: node.cilium.io/agent-not-ready
+        value: "true"
+      taints:
+      - effect: NoSchedule
+        key: workload
+        value: sample-app
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sample
+---
+# Intentionally resource-constrained deployment for Exercise 1
+# This app burns CPU on each request to guarantee autoscaling behavior
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+  namespace: sample
+  labels:
+    app: sample-app
+spec:
+  replicas: 1  # Start with 1 replica to see scaling
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      nodeSelector:
+        karpenter.sh/nodepool: default1
+      tolerations:
+      - key: workload
+        operator: Equal
+        value: sample-app
+        effect: NoSchedule
+      containers:
+      - name: cpu-burner
+        # This image runs a simple web server that burns CPU on each request
+        # Source: https://github.com/kubernetes/examples/tree/master/staging/php-apache
+        image: registry.k8s.io/hpa-example:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 200m          # Increased for better visibility
+            memory: 128Mi      # Increased for stability
+          limits:
+            cpu: 500m          # Higher ceiling for burst
+            memory: 256Mi
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: sample-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-app
+  namespace: sample
+spec:
+  selector:
+    app: sample-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+---
+# KEDA ScaledObject for CPU-based autoscaling
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: sample-app-scaledobject
+  namespace: sample
+spec:
+  scaleTargetRef:
+    name: sample-app
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  pollingInterval: 15        # Check metrics every 15s (faster response)
+  cooldownPeriod: 60         # Wait 60s before scaling down
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 60
+          policies:
+          - type: Percent
+            value: 50
+            periodSeconds: 15
+        scaleUp:
+          stabilizationWindowSeconds: 0     # Scale up immediately
+          policies:
+          - type: Percent
+            value: 100                      # Double pods quickly
+            periodSeconds: 15
+          - type: Pods
+            value: 5                        # Or add 5 pods at once
+            periodSeconds: 15
+          selectPolicy: Max                 # Use the most aggressive
+  triggers:
+  - type: cpu
+    metricType: Utilization
+    metadata:
+      value: "60"                           # 60% threshold (more stable than 50%)

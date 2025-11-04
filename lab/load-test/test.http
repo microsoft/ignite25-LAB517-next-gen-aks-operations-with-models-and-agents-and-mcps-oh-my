@@ -1,0 +1,3 @@
+### Get the homepage
+GET /
+Host: PUBLIC_IP
